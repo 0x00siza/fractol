@@ -6,7 +6,7 @@ INCLUDE = -I /Users/${USER}/.brew/Cellar/glfw/3.4/include/GLFW
 LIB = -L /Users/${USER}/.brew/Cellar/glfw/3.4/lib
 
 CC		= cc
-CFLAGS	= -Wall -Werror -Wextra -O3 -ffast-math -fsanitize=address -g
+CFLAGS	= -Wall -Werror -Wextra
 
 MOBJS	= ${SRCS:%.c=%.o}
 SRCS	=  main.c  ft_julia.c   ft_mandelbrot.c  utils.c

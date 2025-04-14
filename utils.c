@@ -6,11 +6,12 @@
 /*   By: ner-roui <ner-roui@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/12 12:25:35 by naessgui          #+#    #+#             */
-/*   Updated: 2025/04/14 16:46:24 by ner-roui         ###   ########.fr       */
+/*   Updated: 2025/04/14 17:21:58 by ner-roui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fractol.h"
+
 
 int ft_strcmp(char *s1, char *s2)
 {

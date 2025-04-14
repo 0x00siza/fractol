@@ -6,11 +6,44 @@
 /*   By: ner-roui <ner-roui@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/12 12:22:07 by naessgui          #+#    #+#             */
-/*   Updated: 2025/04/14 16:47:56 by ner-roui         ###   ########.fr       */
+/*   Updated: 2025/04/14 17:59:08 by ner-roui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+
 #include "fractol.h"
+#include <string.h>
+#include <stdlib.h>
+#include <unistd.h>
+
+void leaks(){
+	system("leaks fractol");
+}
+void	ft_putendl_fd(char *s, int fd)
+{
+	if (fd < 0)
+		return ;
+	if (s)
+	{
+		write(fd, s, strlen(s));
+		write(fd, "\n", 1);
+	}
+}
+
+int	exit_fractal(t_fractol *fractal)
+{
+	mlx_close_window(fractal->mlx);
+	free(fractal);
+	exit(1);
+	return (0);
+}
+
+void	ft_error(void)
+{
+	ft_putendl_fd("Usage: ./fractol <fractal>", 1);
+	ft_putendl_fd("Available fractals: mandelbrot, julia", 1);
+	exit(1);
+}
 
 void	draw_fractals(void *fract)
 {
@@ -54,6 +87,7 @@ int	main(int ac, char **av)
 	int	i;
 		t_fractol *fract;
 
+	atexit(leaks);
 	i = 0;
 	if ((ac == 2 && !ft_strcmp(av[1], "mandelbrot")) || (ac == 4
 			&& !ft_strncmp(av[1], "julia", 5)))
@@ -72,10 +106,8 @@ int	main(int ac, char **av)
 		mlx_scroll_hook(fract->mlx, &my_scrollhook, fract);
 		mlx_loop_hook(fract->mlx, draw_fractals, fract);
 		mlx_loop(fract->mlx);
+		exit_fractal(fract);
 	}
-	else{
-		printf("error");
-		exit(1);
-	}
-		
+	else
+		ft_error();
 }
