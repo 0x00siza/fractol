@@ -6,7 +6,7 @@
 /*   By: ner-roui <ner-roui@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/12 12:22:07 by naessgui          #+#    #+#             */
-/*   Updated: 2025/04/14 17:59:08 by ner-roui         ###   ########.fr       */
+/*   Updated: 2025/04/14 18:07:23 by ner-roui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,9 +16,9 @@
 #include <stdlib.h>
 #include <unistd.h>
 
-void leaks(){
-	system("leaks fractol");
-}
+// void leaks(){
+// 	system("leaks fractol");
+// }
 void	ft_putendl_fd(char *s, int fd)
 {
 	if (fd < 0)
@@ -34,7 +34,7 @@ int	exit_fractal(t_fractol *fractal)
 {
 	mlx_close_window(fractal->mlx);
 	free(fractal);
-	exit(1);
+	exit(0);
 	return (0);
 }
 
@@ -42,7 +42,7 @@ void	ft_error(void)
 {
 	ft_putendl_fd("Usage: ./fractol <fractal>", 1);
 	ft_putendl_fd("Available fractals: mandelbrot, julia", 1);
-	exit(1);
+	exit(0);
 }
 
 void	draw_fractals(void *fract)
@@ -87,7 +87,7 @@ int	main(int ac, char **av)
 	int	i;
 		t_fractol *fract;
 
-	atexit(leaks);
+	// atexit(leaks);
 	i = 0;
 	if ((ac == 2 && !ft_strcmp(av[1], "mandelbrot")) || (ac == 4
 			&& !ft_strncmp(av[1], "julia", 5)))

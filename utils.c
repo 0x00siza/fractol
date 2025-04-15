@@ -6,7 +6,7 @@
 /*   By: ner-roui <ner-roui@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/04/12 12:25:35 by naessgui          #+#    #+#             */
-/*   Updated: 2025/04/14 17:21:58 by ner-roui         ###   ########.fr       */
+/*   Updated: 2025/04/15 09:14:49 by ner-roui         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,32 +39,63 @@ int	ft_strncmp(const char *s1, const char *s2, size_t n)
 	return (0);
 }
 
-double	ft_atoi(char *str)
+void	f_error(char *msg)
 {
-	int		i;
-	float		result;
-	int		sign;
-	float	pow;
+	// ft_putendl_fd(msg, 2);
+	printf("%s\n",msg);
+	exit(1);
+}
 
+
+static double	handl_atoi(char *s)
+{
+	double	fractional_part;
+	double	pow;
+
+	fractional_part = 0;
 	pow = 1;
-	result = 0;
-	sign = 1;
-	i = 0;
-	while (str[i] == ' ' || (str[i] >= 9 && str[i] <= 13))
-		i++;
-	if (str[i] == '-' || str[i] == '+')
-		if (str[i++] == '-')
-			sign = -1;
-	while (str[i] && str[i] >= '0' && str[i] <= '9' && str[i] != '.')
-		result = result * 10 + (str[i++] - '0');
-	if (str[i] == '.')
-		i++;
-	while (str[i] && str[i] >= '0' && str[i] <= '9')
+	if ('.' == *s)
+		++s;
+	while (*s)
 	{
-		pow /= 10;
-		result = result + (str[i++] - '0') * pow;
+		if (*s < '0' || *s > '9')
+			f_error("Error");
+		else
+		{
+			pow /= 10;
+			fractional_part = fractional_part + (*s++ - 48) * pow;
+		}
 	}
-	return (result * sign);
+	return (fractional_part);
+}
+
+double	ft_atoi(char *s)
+{
+	double	result;
+	long	integer_part;
+	int		sign;
+
+	sign = +1;
+	integer_part = 0;
+	while ((*s >= 9 && *s <= 13) || 32 == *s)
+		++s;
+	if ('+' == *s || '-' == *s)
+	{
+		if ('-' == *s)
+			sign = -sign;
+		s++;
+	}
+	if (*s == '\0')
+		f_error("ERROR");
+	while (*s != '.' && *s)
+	{
+		if (*s < '0' || *s > '9')
+			f_error("Error");
+		else
+			integer_part = (integer_part * 10) + (*s++ - 48);
+	}
+	result = handl_atoi(s) + integer_part;
+	return ((result * sign));
 }
 void	init_var(t_fractol *fract)
 {
